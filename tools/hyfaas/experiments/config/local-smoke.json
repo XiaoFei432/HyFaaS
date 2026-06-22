@@ -1,0 +1,37 @@
+{
+  "description": "Small local smoke matrix for validating the experiment harness quickly.",
+  "cluster": {
+    "servers": 2,
+    "cpuPerServer": 8.0,
+    "bandwidthPerCpuMbps": 100.0,
+    "bandwidthCapMbps": 1000.0
+  },
+  "pricing": {
+    "cpuSecond": 0.00001667,
+    "request": 0.0000002
+  },
+  "profiling": {
+    "parallelismCandidates": [1, 2, 4],
+    "cpuCandidates": [0.5, 1.0, 2.0],
+    "blockMs": 1.5,
+    "startMs": 2.0,
+    "storageRequestMs": 8.0,
+    "coldStartMs": 80.0,
+    "scaleMsPerInstance": 15.0,
+    "ioRemoteShare": 1.0,
+    "costWeight": 0.05
+  },
+  "optimizer": {
+    "maxLhpIterations": 16,
+    "minGainMs": 0.5,
+    "branchSlackFraction": 1.0
+  },
+  "workloads": ["sort", "ml_pipeline"],
+  "methods": ["hyfaas-s", "hyfaas-l", "hyfaas"],
+  "sensitivity": {
+    "sortSizesGb": [1],
+    "videoFps": [30],
+    "imageSets": ["CIFAR-10"],
+    "slaServers": [2]
+  }
+}

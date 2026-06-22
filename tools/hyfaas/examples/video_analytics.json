@@ -1,0 +1,86 @@
+{
+  "workflow": {
+    "stages": [
+      {
+        "id": "extract",
+        "action": "/guest/video-extract",
+        "parallelism": 8,
+        "cpus": 1.0
+      },
+      {
+        "id": "filter",
+        "action": "/guest/frame-filter",
+        "parallelism": 8,
+        "cpus": 1.0
+      },
+      {
+        "id": "classify",
+        "action": "/guest/frame-classify",
+        "parallelism": 16,
+        "cpus": 2.0
+      },
+      {
+        "id": "merge",
+        "action": "/guest/result-merge",
+        "parallelism": 4,
+        "cpus": 1.0
+      }
+    ],
+    "edges": [
+      {
+        "from": "extract",
+        "to": "filter",
+        "bytes": 268435456
+      },
+      {
+        "from": "filter",
+        "to": "classify",
+        "bytes": 134217728
+      },
+      {
+        "from": "classify",
+        "to": "merge",
+        "bytes": 33554432
+      }
+    ]
+  },
+  "cluster": {
+    "servers": 8,
+    "cpuPerServer": 16.0,
+    "bandwidthPerCpuMbps": 40.0,
+    "bandwidthCapMbps": 1000.0
+  },
+  "pricing": {
+    "cpuSecond": 0.00001667,
+    "request": 0.0000002
+  },
+  "samples": [],
+  "profiling": {
+    "parallelismCandidates": [
+      1,
+      2,
+      4,
+      8,
+      16,
+      32
+    ],
+    "cpuCandidates": [
+      0.5,
+      1.0,
+      2.0,
+      4.0
+    ],
+    "blockMs": 1.5,
+    "startMs": 2.0,
+    "storageRequestMs": 8.0,
+    "coldStartMs": 150.0,
+    "scaleMsPerInstance": 25.0,
+    "ioRemoteShare": 1.0,
+    "costWeight": 0.05
+  },
+  "optimizer": {
+    "maxLhpIterations": 64,
+    "minGainMs": 0.5,
+    "branchSlackFraction": 0.65
+  }
+}

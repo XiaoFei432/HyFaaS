@@ -1,0 +1,27 @@
+{
+  "name": "mlp",
+  "paperName": "MLp",
+  "workflow": {
+    "stages": [
+      {"id": "split", "action": "hyfaas/ml_pipeline", "parallelism": 16, "cpus": 1.0},
+      {"id": "pca", "action": "hyfaas/ml_pipeline", "parallelism": 16, "cpus": 2.0},
+      {"id": "train", "action": "hyfaas/ml_pipeline", "parallelism": 32, "cpus": 4.0},
+      {"id": "test", "action": "hyfaas/ml_pipeline", "parallelism": 8, "cpus": 2.0}
+    ],
+    "edges": [
+      {"from": "split", "to": "pca", "bytes": 2147483648},
+      {"from": "pca", "to": "train", "bytes": 1073741824},
+      {"from": "train", "to": "test", "bytes": 268435456}
+    ]
+  },
+  "defaultInput": {
+    "dataset": "CIFAR-10",
+    "datasetBytes": 2147483648
+  },
+  "samples": [
+    {"stageId": "split", "inputBytes": 2147483648, "contentFeatures": {"channels": 3, "resolution": 32}, "initMs": 150, "computeMs": 42000, "startedCold": true},
+    {"stageId": "pca", "inputBytes": 2147483648, "contentFeatures": {"channels": 3, "resolution": 32}, "initMs": 160, "computeMs": 155000, "startedCold": true},
+    {"stageId": "train", "inputBytes": 1073741824, "contentFeatures": {"trees": 100}, "initMs": 180, "computeMs": 310000, "startedCold": true},
+    {"stageId": "test", "inputBytes": 268435456, "contentFeatures": {"classes": 10}, "initMs": 140, "computeMs": 52000, "startedCold": true}
+  ]
+}

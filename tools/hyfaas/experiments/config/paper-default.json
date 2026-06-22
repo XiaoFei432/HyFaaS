@@ -1,0 +1,37 @@
+{
+  "description": "HyFaaS planner experiment matrix. Defaults approximate the TPDS testbed shape for reproducibility studies; exact paper numbers require the original deployment, datasets, and external baselines.",
+  "cluster": {
+    "servers": 8,
+    "cpuPerServer": 36.0,
+    "bandwidthPerCpuMbps": 400.0,
+    "bandwidthCapMbps": 10000.0
+  },
+  "pricing": {
+    "cpuSecond": 0.00001667,
+    "request": 0.0000002
+  },
+  "profiling": {
+    "parallelismCandidates": [1, 2, 4, 8, 16, 32, 64, 100],
+    "cpuCandidates": [0.5, 1.0, 2.0, 4.0, 6.0],
+    "blockMs": 1.5,
+    "startMs": 2.0,
+    "storageRequestMs": 8.0,
+    "coldStartMs": 150.0,
+    "scaleMsPerInstance": 25.0,
+    "ioRemoteShare": 1.0,
+    "costWeight": 0.05
+  },
+  "optimizer": {
+    "maxLhpIterations": 128,
+    "minGainMs": 0.5,
+    "branchSlackFraction": 1.0
+  },
+  "workloads": ["sort", "ml_pipeline", "video_analytics", "slapp"],
+  "methods": ["hyfaas-s", "hyfaas-l", "hyfaas"],
+  "sensitivity": {
+    "sortSizesGb": [10, 20, 30, 40, 50],
+    "videoFps": [30, 60],
+    "imageSets": ["CIFAR-10", "MNIST"],
+    "slaServers": [2, 4, 6, 8]
+  }
+}

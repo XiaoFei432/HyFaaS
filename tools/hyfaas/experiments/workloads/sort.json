@@ -1,0 +1,21 @@
+{
+  "name": "sort",
+  "paperName": "Sort",
+  "workflow": {
+    "stages": [
+      {"id": "sort-map", "action": "hyfaas/sort_pipeline", "parallelism": 64, "cpus": 1.0},
+      {"id": "sort-reduce", "action": "hyfaas/sort_pipeline", "parallelism": 64, "cpus": 1.0}
+    ],
+    "edges": [
+      {"from": "sort-map", "to": "sort-reduce", "bytes": 10737418240}
+    ]
+  },
+  "defaultInput": {
+    "datasetBytes": 10737418240,
+    "content": "sortbench"
+  },
+  "samples": [
+    {"stageId": "sort-map", "inputBytes": 10737418240, "contentFeatures": {"recordWidth": 100}, "initMs": 180, "computeMs": 185000, "startedCold": true},
+    {"stageId": "sort-reduce", "inputBytes": 10737418240, "contentFeatures": {"recordWidth": 100}, "initMs": 180, "computeMs": 248000, "startedCold": true}
+  ]
+}

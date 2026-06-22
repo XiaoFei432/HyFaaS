@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: owdev-invoker
+spec:
+  template:
+    spec:
+      containers:
+        - name: invoker
+          env:
+            - name: HYFAAS_SHARED_MEMORY
+              value: /mnt/hyfaas
+            - name: HYFAAS_OBJECT_STORE
+              value: /mnt/hyfaas-object-store
+          volumeMounts:
+            - name: hyfaas-shm
+              mountPath: /mnt/hyfaas
+            - name: hyfaas-object-store
+              mountPath: /mnt/hyfaas-object-store
+      volumes:
+        - name: hyfaas-shm
+          emptyDir:
+            medium: Memory
+        - name: hyfaas-object-store
+          emptyDir: {}

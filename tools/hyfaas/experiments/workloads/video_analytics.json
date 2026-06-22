@@ -1,0 +1,31 @@
+{
+  "name": "vid",
+  "paperName": "Vid",
+  "workflow": {
+    "stages": [
+      {"id": "extract", "action": "hyfaas/video_pipeline", "parallelism": 32, "cpus": 1.0},
+      {"id": "filter", "action": "hyfaas/video_pipeline", "parallelism": 32, "cpus": 1.0},
+      {"id": "classify", "action": "hyfaas/video_pipeline", "parallelism": 64, "cpus": 2.0},
+      {"id": "switch", "action": "hyfaas/video_pipeline", "parallelism": 16, "cpus": 1.0},
+      {"id": "merge", "action": "hyfaas/video_pipeline", "parallelism": 16, "cpus": 1.0}
+    ],
+    "edges": [
+      {"from": "extract", "to": "filter", "bytes": 2147483648},
+      {"from": "filter", "to": "classify", "bytes": 1073741824},
+      {"from": "filter", "to": "switch", "bytes": 536870912},
+      {"from": "classify", "to": "merge", "bytes": 268435456},
+      {"from": "switch", "to": "merge", "bytes": 134217728}
+    ]
+  },
+  "defaultInput": {
+    "fps": 60,
+    "datasetBytes": 2147483648
+  },
+  "samples": [
+    {"stageId": "extract", "inputBytes": 2147483648, "contentFeatures": {"fps": 60}, "initMs": 160, "computeMs": 90000, "startedCold": true},
+    {"stageId": "filter", "inputBytes": 1073741824, "contentFeatures": {"fps": 60}, "initMs": 155, "computeMs": 64000, "startedCold": true},
+    {"stageId": "classify", "inputBytes": 1073741824, "contentFeatures": {"fps": 60}, "initMs": 190, "computeMs": 265000, "startedCold": true},
+    {"stageId": "switch", "inputBytes": 536870912, "contentFeatures": {"fps": 60}, "initMs": 150, "computeMs": 46000, "startedCold": true},
+    {"stageId": "merge", "inputBytes": 402653184, "contentFeatures": {"fps": 60}, "initMs": 145, "computeMs": 52000, "startedCold": true}
+  ]
+}

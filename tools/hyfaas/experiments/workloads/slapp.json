@@ -1,0 +1,40 @@
+{
+  "name": "sla",
+  "paperName": "SLA",
+  "workflow": {
+    "stages": [
+      {"id": "s0", "action": "hyfaas/slapp_pipeline", "parallelism": 24, "cpus": 1.0},
+      {"id": "s1", "action": "hyfaas/slapp_pipeline", "parallelism": 24, "cpus": 1.0},
+      {"id": "s2", "action": "hyfaas/slapp_pipeline", "parallelism": 32, "cpus": 2.0},
+      {"id": "s3", "action": "hyfaas/slapp_pipeline", "parallelism": 16, "cpus": 1.0},
+      {"id": "s4", "action": "hyfaas/slapp_pipeline", "parallelism": 32, "cpus": 2.0},
+      {"id": "s5", "action": "hyfaas/slapp_pipeline", "parallelism": 16, "cpus": 1.0},
+      {"id": "s6", "action": "hyfaas/slapp_pipeline", "parallelism": 24, "cpus": 2.0},
+      {"id": "s7", "action": "hyfaas/slapp_pipeline", "parallelism": 8, "cpus": 1.0}
+    ],
+    "edges": [
+      {"from": "s0", "to": "s1", "bytes": 1073741824},
+      {"from": "s0", "to": "s2", "bytes": 805306368},
+      {"from": "s1", "to": "s3", "bytes": 402653184},
+      {"from": "s2", "to": "s4", "bytes": 536870912},
+      {"from": "s3", "to": "s5", "bytes": 201326592},
+      {"from": "s4", "to": "s6", "bytes": 268435456},
+      {"from": "s5", "to": "s7", "bytes": 134217728},
+      {"from": "s6", "to": "s7", "bytes": 134217728}
+    ]
+  },
+  "defaultInput": {
+    "datasetBytes": 1073741824,
+    "shape": "synthetic-eight-stage"
+  },
+  "samples": [
+    {"stageId": "s0", "inputBytes": 1073741824, "contentFeatures": {"mix": 0.2}, "initMs": 150, "computeMs": 86000, "startedCold": true},
+    {"stageId": "s1", "inputBytes": 1073741824, "contentFeatures": {"mix": 0.3}, "initMs": 150, "computeMs": 96000, "startedCold": true},
+    {"stageId": "s2", "inputBytes": 805306368, "contentFeatures": {"mix": 0.8}, "initMs": 170, "computeMs": 175000, "startedCold": true},
+    {"stageId": "s3", "inputBytes": 402653184, "contentFeatures": {"mix": 0.4}, "initMs": 145, "computeMs": 58000, "startedCold": true},
+    {"stageId": "s4", "inputBytes": 536870912, "contentFeatures": {"mix": 0.7}, "initMs": 170, "computeMs": 148000, "startedCold": true},
+    {"stageId": "s5", "inputBytes": 201326592, "contentFeatures": {"mix": 0.3}, "initMs": 145, "computeMs": 52000, "startedCold": true},
+    {"stageId": "s6", "inputBytes": 268435456, "contentFeatures": {"mix": 0.6}, "initMs": 160, "computeMs": 90000, "startedCold": true},
+    {"stageId": "s7", "inputBytes": 268435456, "contentFeatures": {"mix": 0.5}, "initMs": 145, "computeMs": 47000, "startedCold": true}
+  ]
+}

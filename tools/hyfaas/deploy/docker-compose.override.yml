@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+  invoker:
+    environment:
+      HYFAAS_SHARED_MEMORY: /mnt/hyfaas
+      HYFAAS_OBJECT_STORE: /mnt/hyfaas-object-store
+    volumes:
+      - hyfaas-shm:/mnt/hyfaas
+      - hyfaas-object-store:/mnt/hyfaas-object-store
+
+volumes:
+  hyfaas-shm:
+  hyfaas-object-store:

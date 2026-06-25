@@ -2,7 +2,7 @@
 
 This repository contains the source code for the paper:
 
-> - [HyFaaS: Accelerating Serverless Workflows by Unleashing Hybrid Resource Elasticity](https://doi.org/10.1109/TPDS.2025.3632089)
+> - [HyFaaS: Accelerating Serverless Workflows by Unleashing Hybrid Resource Elasticity, TPDS 2026](https://doi.org/10.1109/TPDS.2025.3632089)
 
 ## Overview
 
